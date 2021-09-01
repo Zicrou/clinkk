@@ -1,37 +1,48 @@
-<p id="notice"><%= notice %></p>
+<div class="container portfolio-container">
+  <p id="notice"><%= notice %></p>
 
-<h1>Caisses</h1>
+  <h1>Caisses</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nom</th>
-      <th>Prenom</th>
-      <th>Acte</th>
-      <th>Payement</th>
-      <th>Montant</th>
-      <th>Telephone</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @caisses.each do |caiss| %>
+  <table>
+    <thead>
       <tr>
-        <td><%= caiss.nom %></td>
-        <td><%= caiss.prenom %></td>
-        <td><%= caiss.acte %></td>
-        <td><%= caiss.payement %></td>
-        <td><%= caiss.montant %></td>
-        <td><%= caiss.telephone %></td>
-        <td><%= link_to 'Show', caiss %></td>
-        <td><%= link_to 'Edit', edit_caiss_path(caiss) %></td>
-        <td><%= link_to 'Destroy', caiss, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Nom</th>
+        <th>Prenom</th>
+        <th>Acte</th>
+        <th>Payement</th>
+        <th>Montant</th>
+        <th>Telephone</th>
+        <th>Created_At</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @caisses.each do |caiss| %>
+        <tr>
+          <td><%= caiss.nom %></td>
+          <td><%= caiss.prenom %></td>
+          <td><%= caiss.acte %></td>
+          <td><%= caiss.payement %></td>
+          <td><%= caiss.montant %></td>
+          <td><%= caiss.telephone %></td>
+          <td><%= caiss.created_at %></td>
+          <td><%= link_to 'Voir', caiss %></td>
+          <td><%= link_to 'Modifier', edit_caiss_path(caiss) %></td>
+          <td><%= link_to 'Supprimer', caiss, method: :delete, data: { confirm: 'Êtes-vous sûre?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+<%# @caiss_journaliers.each do |caiss_jour| %>
+  <%#= caiss_jour.montant %>
+  <%#= caiss_jour.id %>
+  <br>
+<%# end %>
+  <!-- span>Total Jour: <%#= @total= @caiss_journaliers.sum("montant") %> </span -->
+  <br>
 
-<%= link_to 'New Caiss', new_caiss_path %>
+
+  <%= link_to 'Nouveau', new_caiss_path %>
+</div>
