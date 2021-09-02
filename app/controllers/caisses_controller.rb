@@ -4,10 +4,10 @@ class CaissesController < ApplicationController
   # GET /caisses or /caisses.json
   def index    
     @caisses = Caisse.all
-    #@selected_date = Date.today
+
+    @selected_date = Date.today
 # This will look for records on the given date between 00:00:00 and 23:59:59
-    #@caiss_journaliers = Caisse.where(:created_at => @selected_date.beginning_of_day..@selected_date.end_of_day)
-    
+    @caiss_journaliers = Caisse.where(:created_at => @selected_date.beginning_of_day..@selected_date.end_of_day)
   end
 
   # GET /caisses/1 or /caisses/1.json

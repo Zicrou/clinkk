@@ -1,7 +1,8 @@
 <div class="container portfolio-container">
   <p id="notice"><%= notice %></p>
 
-  <h1>Caisses</h1>
+  <h1>Caisse <span> Aujourd'hui: <%= @total= @caiss_journaliers.sum("montant") %> </span -->
+  <br></h1>
 
   <table>
     <thead>
@@ -35,14 +36,24 @@
     </tbody>
   </table>
   <br>
-<%# @caiss_journaliers.each do |caiss_jour| %>
-  <%#= caiss_jour.montant %>
-  <%#= caiss_jour.id %>
+  <hr>
   <br>
-<%# end %>
-  <!-- span>Total Jour: <%#= @total= @caiss_journaliers.sum("montant") %> </span -->
   <br>
-
+<div class="row">
+  <div class="col-md-5">
+    <%= form_tag(method: :get) do %>
+      <div class="form-group">
+        <%#= label :Selectionner_une_date %>
+        <%= date_field_tag(:selected_date, params[:selected_date], class:"form-control col-sm-2") %>
+        <br>
+      <%= submit_tag ("Rechercher"),  class:"form-control col-md-2 btn-primary" %>
+      </div>
+      <br>
+      <%# if defined?(@query) && @query.present?  %>
+        <%#= link_to 'Réinitialiser', ouvriers_path %>
+      <%# end %>
+    <% end %>
+  </div>
 
   <%= link_to 'Nouveau', new_caiss_path %>
 </div>

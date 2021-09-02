@@ -1,0 +1,59 @@
+<div class="container portfolio-container">
+  <p id="notice"><%= notice %></p>
+  <%= link_to 'Nouveau', new_comptabilite_path, class:"btn btn-primary" %>
+  <br>
+  <h1>Encaissé <span> Aujourd'hui: <%= @total= @caiss_journalier.sum("montant") %> </span -->
+  <br></h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prenom</th>
+        <th>Acte</th>
+        <th>Payment</th>
+        <th>Montant</th>
+        <th>Telephone</th>
+        <th>Crée le :</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @comptabilites.each do |comptabilite| %>
+        <tr>
+          <td><%= comptabilite.nom %></td>
+          <td><%= comptabilite.prenom %></td>
+          <td><%= comptabilite.acte %></td>
+          <td><%= comptabilite.payment %></td>
+          <td><%= comptabilite.montant %></td>
+          <td><%= comptabilite.telephone %></td>
+          <td><%= comptabilite.created_at %></td>
+          <td><%= link_to 'Voir', comptabilite %></td>
+          <td><%= link_to 'Modifier', edit_comptabilite_path(comptabilite) %></td>
+          <td><%= link_to 'Supprimer', comptabilite, method: :delete, data: { confirm: 'Êtes-vous sûre?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<br>
+  <hr>
+  <br>
+  <br>
+<div class="row">
+  <div class="col-md-2">
+    <%= form_tag(comptabilites_path, method: :get) do %>
+      <div class="form-group">
+        <%#= label :Selectionner_une_date %>
+        <%= date_field_tag(:selected_date, params[:selected_date], class:"form-control col-sm-2") %>
+        <br>
+      <%= submit_tag ("Rechercher"),  class:"form-control col-md-2 btn-primary" %>
+      </div>
+      <br>
+      
+    <% end %>
+  </div>
+  <br>
+  <%#= @recherche_caiss_journalier %>
+  <span class="alert alert-primary d-flex align-items-center" role="alert" ><%= @recherche_caiss_journalier.sum("montant") %></span>
+</div>

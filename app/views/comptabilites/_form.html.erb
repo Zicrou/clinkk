@@ -1,0 +1,50 @@
+<div class="container portfolio-container">
+  <%= form_with(model: comptabilite, local: true) do |form| %>
+    <% if comptabilite.errors.any? %>
+      <div id="error_explanation">
+        <h2>Impossible d'enregistrer: <%= pluralize(comptabilite.errors.count, "erreur") %></h2>
+
+        <ul>
+        <% comptabilite.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group col-md-4">
+      <%= form.label :nom %>
+      <%= form.text_field :nom, class:"form-control" %>
+    </div>
+
+    <div class="form-group col-md-4">
+      <%= form.label :prenom %>
+      <%= form.text_field :prenom, class:"form-control" %>
+    </div>
+
+    <div class="form-group col-md-4">
+      <%= form.label :acte %>
+      <%= form.text_field :acte, class:"form-control" %>
+    </div>
+
+    <div class="form-group col-md-4">
+      <%= form.label :payment %>
+      <%= form.text_field :payment, class:"form-control" %>
+    </div>
+
+    <div class="form-group col-md-4">
+      <%= form.label :montant %>
+      <%= form.number_field :montant, class:"form-control" %>
+    </div>
+
+    <div class="form-group col-md-4">
+      <%= form.label :telephone %>
+      <%= form.text_field :telephone, class:"form-control" %>
+    </div>
+
+    <br>
+    <div class="form-group">
+      <%= form.submit "Enregistrer", class:"btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

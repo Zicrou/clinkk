@@ -1,0 +1,36 @@
+<div class="container portfolio-container">
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <strong>Nom:</strong>
+    <%= @comptabilite.nom %>
+  </p>
+
+  <p>
+    <strong>Prenom:</strong>
+    <%= @comptabilite.prenom %>
+  </p>
+
+  <p>
+    <strong>Acte:</strong>
+    <%= @comptabilite.acte %>
+  </p>
+
+  <p>
+    <strong>Payment:</strong>
+    <%= @comptabilite.payment %>
+  </p>
+
+  <p>
+    <strong>Montant:</strong>
+    <%= @comptabilite.montant %>
+  </p>
+
+  <p>
+    <strong>Telephone:</strong>
+    <%= @comptabilite.telephone %>
+  </p>
+
+  <%= link_to 'Modifer', edit_comptabilite_path(@comptabilite) %> |
+  <%= link_to 'Retour', comptabilites_path %>
+</div>
