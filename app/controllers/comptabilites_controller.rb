@@ -3,13 +3,24 @@ class ComptabilitesController < ApplicationController
 
   # GET /comptabilites or /comptabilites.json
   def index
+    @date_day = params[:selected_date_day]
+    @date_month = params[:selected_date_month]
     @comptabilites = Comptabilite.all
     
     @caiss_journalier = Comptabilite.bilan_journalier(Date.today)
     
-    @date = params[:selected_date]
-    @date_convert = @date.to_date if @date
-    @recherche_caiss_journalier = Comptabilite.recherche_caiss_journalier(@date_convert)
+    if @date_month && !@date_month.empty?
+      @date_convert = @date_month.to_date
+      @bilan_mensuel = Comptabilite.bilan_mensuel(@date_convert)
+      @date_month_info = @date_month.to_datetime
+      #@date_month_info.strftime("%Y %m")
+    end
+
+    if @date_day && !@date_day.empty?
+      @date_convert = @date_day.to_date
+      @recherche_caiss_journalier = Comptabilite.recherche_caiss_journalier(@date_convert)
+    end
+
   end
 
   # GET /comptabilites/1 or /comptabilites/1.json
@@ -70,7 +81,7 @@ class ComptabilitesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comptabilite_params
-      params.require(:comptabilite).permit(:nom, :prenom, :acte, :payment, :montant, :telephone, :selected_date)
+      params.require(:comptabilite).permit(:nom, :prenom, :acte, :payment, :montant, :telephone, :selected_date_day, :selected_date_month)
     end
 
     #def set_recherch_comptabilite_params

@@ -8,17 +8,9 @@ class Comptabilite < ApplicationRecord
     @caiss_journaliers = Comptabilite.where(:created_at => @selected_date.beginning_of_day..@selected_date.end_of_day)
   end
   
-  def self.bilan_mensuel(selected_date)
-    if selected_date
-      list_encaisement = Comptabilite.where(:created_at => @selected_date.beginning_of_day..@selected_date.end_of_day)
-      if list_encaisement
-        where(superpower_id: superpower)
-      else
-        all
-      end
-    else
-      all
-    end
+  def self.bilan_mensuel(select_date)
+    @selected_date = select_date
+    @caiss_journaliers = Comptabilite.where(:created_at => @selected_date.beginning_of_month..@selected_date.end_of_month)
   end
 
 
