@@ -1,26 +1,40 @@
-<div class="collapse bg-dark" id="navbarHeader">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-8 col-md-7 py-4">
-        <h4 class="text-white">About</h4>
-        <p class="text-muted">I am me, through differents ways, but the same me; The same style! The Same Zicrou!.</p>
-      </div>
-      <div class="col-sm-4 offset-md-1 py-4">
-        <h4 class="text-white">Explore</h4>
-        <ul class="list-unstyled">
-          <%#= nav_helper 'text-white', 'li' %>
-          <li><%#= login_helper 'text-white' %></li>
-        </ul>
+<header>
+  <div class="collapse bg-dark" id="navbarHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-7 py-4">
+          <h4 class="text-white"><%= link_to "Se Connecter", new_user_session_path() %></h4>
+          <p class="text-muted"></p>
+        </div>
+        <div class="col-sm-4 offset-md-1 py-4">
+          <h4 class="text-white">Explore</h4>
+          <ul class="list-unstyled">
+            <%#= nav_helper 'text-white', 'li' %>
+            <li><%#= login_helper 'text-white' %></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="navbar navbar-dark bg-dark shadow-sm">
-  <div class="container d-flex justify-content-between">
-    <a href="#" class="navbar-brand">CLINIQUE</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container d-flex justify-content-between ">
+      <%= link_to "CLINIQUE", root_path(), class:"navbar-brand"%>
+      <div class="dropdown" style="margin-right:6rem;">
+        <button class="navbar-toggler" type="button" id="dropDownMenuBottom" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" data-bs-toggle="dropdown">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropDownMenuBottom">
+          <% if current_user.is_a?(GuestUser)%>
+            <li><%=link_to "Se Connecter","#", class:"dropdown-item text-white" %>
+          <% else %>
+          <li><%=link_to "Comptabilité", comptabilites_path(), class:"dropdown-item text-white nav-link span" %></li>
+         
+          <li><hr class="dropdown-divider"></li>
+            <li><%=link_to "Déconnection",destroy_user_session_path,method: :delete, class:"nav-link span dropdown-item text-white" %>
+          <% end %></li>
+      </ul>
+      </div>
+    </div>
   </div>
-</div>
+</header>

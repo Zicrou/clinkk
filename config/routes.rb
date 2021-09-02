@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :comptabilites
-  devise_for :users
+  devise_for :users, path: ''
   #devise_for :users, path: '', path_names: {sign_in: 'Login', sign_out: 'Logout', sign_up: 'Register'}, controllers:{sessions: 'users/sessions'}
   get 'pages/index'
   resources :caisses

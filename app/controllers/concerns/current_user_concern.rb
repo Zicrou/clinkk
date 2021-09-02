@@ -10,7 +10,8 @@ module CurrentUserConcern
 		guest.name = "Guest User"
 		guest.first_name = "Guest"
 		guest.last_name = "User"
-		guest.email = "guest@example.ziz"
+		guest.email = "guest@example.user"
+		guest.role = "guest_user"
 		guest
 	end
 end

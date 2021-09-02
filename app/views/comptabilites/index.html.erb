@@ -63,13 +63,10 @@
           <%= date_field_tag(:selected_date_month, params[:selected_date_month], class:"form-control col-sm-3") %>
           <br>
         <%= submit_tag ("Bilan du mois"),  class:"form-control col-md-4 btn-primary" %>
-        </div>
-        <br>
-        
+        </div>        
       <% end %>
     </div>
   </div>
-  <br>
   <% if @date_month %>
     <%#= @date_month_info %>
     <span class="alert alert-primary d-flex align-items-center" role="alert">Le bilan du <%= @date_month_info.strftime("%Y/%m") if !@date_month.empty? %> est de :<%= @bilan_mensuel.sum("montant") if @bilan_mensuel %>F</span>

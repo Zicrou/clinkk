@@ -2,6 +2,15 @@
   <div class="container">
     <h1 class="jumbotron-heading">BIENVENUE!</h1>
     <p class="lead text-muted">VOTRE SANTÉ, NOTRE FIERTÉ.</p>
+    <%# if current_user.is_a?(GuestUser) %>
+      <%#= link_to "Se Connecter",new_user_session_path(), class:"nav-link span" %>
+    <%# else %>
+      <%#= link_to "Se Deconnecter",destroy_user_session_path,method: :delete, class:"nav-link span" %>
+    <%# end %>
+
+    <%# if logged_in?(:admin, :directeur) %>
+      <%#= link_to "Comptabilité",comptabilites_path(), class:"nav-link span" %>
+    <%# end %>
     <hr>
   </div>
 </section>
