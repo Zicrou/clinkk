@@ -26,7 +26,7 @@
         </button>
         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropDownMenuBottom">
           <% if current_user.is_a?(GuestUser)%>
-            <li><%=link_to "Se Connecter","#", class:"dropdown-item text-white" %>
+            <li><%=link_to "Se Connecter",new_user_session_path(), class:"dropdown-item text-white" %>
           <% else %>
           <li><%=link_to "Comptabilité", comptabilites_path(), class:"dropdown-item text-white nav-link span" %></li>
          
