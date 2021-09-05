@@ -1,0 +1,2 @@
+class Ipm < ApplicationRecord
+end

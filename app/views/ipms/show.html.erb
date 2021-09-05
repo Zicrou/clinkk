@@ -1,0 +1,12 @@
+<div class="container portfolio-container">
+  <div>  <p id="notice"><%= notice %></p>
+
+    <p>
+      <strong>Name:</strong>
+      <%= @ipm.name %>
+    </p>
+
+    <%= link_to 'Voir', edit_ipm_path(@ipm) %> |
+    <%= link_to 'Retour', ipms_path %>
+  </div>
+</div>
