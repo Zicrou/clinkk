@@ -1,0 +1,29 @@
+<div class="container portfolio-container">
+  <p id="notice"><%= notice %></p>
+
+  <h1>Type Paiments</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @type_paiments.each do |type_paiment| %>
+        <tr>
+          <td><%= type_paiment.name %></td>
+          <td><%= link_to 'Voir', type_paiment %></td>
+          <td><%= link_to 'Editer', edit_type_paiment_path(type_paiment) %></td>
+          <td><%= link_to 'Supprimer', type_paiment, method: :delete, data: { confirm: 'Êtes-vous sûre?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <%= link_to 'Ajouter', new_type_paiment_path %>
+</div>

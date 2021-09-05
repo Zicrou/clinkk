@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :type_paiments
   resources :ipms
   resources :comptabilites
   devise_for :users, path: ''

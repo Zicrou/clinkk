@@ -16,7 +16,7 @@
         <tr>
           <td><%= ipm.name %></td>
           <td><%= link_to 'Voir', ipm %></td>
-          <td><%= link_to 'Retour', edit_ipm_path(ipm) %></td>
+          <td><%= link_to 'Editer', edit_ipm_path(ipm) %></td>
           <td><%= link_to 'Supprimer', ipm, method: :delete, data: { confirm: 'Êtes-vous sûre?' } %></td>
         </tr>
       <% end %>

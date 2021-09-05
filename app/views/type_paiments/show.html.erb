@@ -1,0 +1,11 @@
+<div class="container portfolio-container">
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <strong>Name:</strong>
+    <%= @type_paiment.name %>
+  </p>
+
+  <%= link_to 'Editer', edit_type_paiment_path(@type_paiment) %> |
+  <%= link_to 'Retour', type_paiments_path %>
+</div>
