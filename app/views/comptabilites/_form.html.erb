@@ -27,6 +27,18 @@
       <%= form.text_field :acte, class:"form-control" %>
     </div>
 
+    <div class="form-group  col-md-4">
+      <%= form.label :ipm_id %>
+      <%= form.collection_select(:ipm_id, Ipm.all, :id, :name,
+          {
+            #selected: "Choisir un IPM",
+            include_blank: true
+          },
+          class: 'form-control'
+        ) 
+      %>
+    </div>
+
     <div class="form-group col-md-4">
       <%= form.label :payment %>
       <%= form.text_field :payment, class:"form-control" %>
@@ -41,6 +53,7 @@
       <%= form.label :telephone %>
       <%= form.text_field :telephone, class:"form-control" %>
     </div>
+    
 
     <br>
     <div class="form-group">

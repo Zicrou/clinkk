@@ -86,7 +86,7 @@ class ComptabilitesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comptabilite_params
-      params.require(:comptabilite).permit(:nom, :prenom, :acte, :payment, :montant, :telephone, :selected_date_day, :selected_date_month)
+      params.require(:comptabilite).permit(:nom, :prenom, :acte, :payment, :montant, :telephone, :selected_date_day, :selected_date_month, :ipm_id)
     end
 
     #def set_recherch_comptabilite_params
