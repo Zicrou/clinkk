@@ -9,7 +9,7 @@ class ComptabilitesController < ApplicationController
     else
       @date_day = params[:selected_date_day]
       @date_month = params[:selected_date_month]
-      @comptabilites = Comptabilite.all
+      @comptabilites = Comptabilite.all.recent
       
       @caiss_journalier = Comptabilite.bilan_journalier(Date.today)
       
@@ -47,12 +47,18 @@ class ComptabilitesController < ApplicationController
     @comptabilite = Comptabilite.new(comptabilite_params)
 
     respond_to do |format|
-      if @comptabilite.save
-        format.html { redirect_to @comptabilite, notice: "Enregistrer avec succés." }
-        format.json { render :show, status: :created, location: @comptabilite }
+      if @comptabilite.pourcentage_ipm == 100 && @comptabilite.montant != 0
+        format.html { render :new}
+          
+          @msg_error = "Impossible d'enregistrer. Le montant ne correspond pas au pourcentage de prise en charge de l'ipm."
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @comptabilite.errors, status: :unprocessable_entity }
+        if @comptabilite.save
+          format.html { redirect_to @comptabilite, notice: "Enregistrer avec succés." }
+          format.json { render :show, status: :created, location: @comptabilite }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @comptabilite.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -60,12 +66,17 @@ class ComptabilitesController < ApplicationController
   # PATCH/PUT /comptabilites/1 or /comptabilites/1.json
   def update
     respond_to do |format|
-      if @comptabilite.update(comptabilite_params)
-        format.html { redirect_to @comptabilite, notice: "Modifier avec succés." }
-        format.json { render :show, status: :ok, location: @comptabilite }
+      if @comptabilite.pourcentage_ipm == 100 && @comptabilite.montant != 0
+        format.html { render :edit}         
+          @msg_error = "Impossible d'enregistrer. Le montant ne correspond pas au pourcentage de prise en charge de l'ipm."
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @comptabilite.errors, status: :unprocessable_entity }
+        if @comptabilite.update(comptabilite_params)
+          format.html { redirect_to @comptabilite, notice: "Modifier avec succés." }
+          format.json { render :show, status: :ok, location: @comptabilite }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @comptabilite.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -87,7 +98,7 @@ class ComptabilitesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comptabilite_params
-      params.require(:comptabilite).permit(:nom, :prenom, :acte, :payment, :montant, :telephone, :selected_date_day, :selected_date_month, :ipm_id, :type_paiment_id)
+      params.require(:comptabilite).permit(:nom, :prenom, :acte, :montant, :telephone, :selected_date_day, :selected_date_month, :ipm_id, :type_paiment_id, :pourcentage_ipm)
     end
 
     #def set_recherch_comptabilite_params

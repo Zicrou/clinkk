@@ -1,7 +1,7 @@
 <div class="container portfolio-container">
   <%= form_with(model: comptabilite, local: true) do |form| %>
     <% if comptabilite.errors.any? %>
-      <div id="error_explanation">
+      <div id="error_explanation" class="alert alert-danger">
         <h2>Impossible d'enregistrer: <%= pluralize(comptabilite.errors.count, "erreur") %></h2>
 
         <ul>
@@ -11,7 +11,9 @@
         </ul>
       </div>
     <% end %>
-
+  <% if @msg_error %>
+    <div class="alert alert-danger"><%= @msg_error %></div>
+  <% end %>
     <div class="form-group col-md-4">
       <%= form.label :nom %>
       <%= form.text_field :nom, class:"form-control" %>
@@ -28,38 +30,41 @@
     </div>
 
     <div class="form-group  col-md-4">
-      <%= form.label :type_paiment_id %>
-      <%= form.collection_select(:type_paiment_id, TypePaiment.all, :id, :name,
-          {
-            #selected: "Choisir un IPM",
-            include_blank: true
-          },
-          class: 'form-control',
-          onchange: 'getIDTypePaiment()',
-          class: 'form-control'
-        ) 
-      %>
+    <%= form.label :type_paiment_id %>
+    <%= form.collection_select(:type_paiment_id, TypePaiment.all, :id, :name,
+        {
+          #selected: "Choisir un IPM",
+          include_blank: true
+        },
+        class: 'form-control',
+        onchange: 'getIDTypePaiment()',
+        class: 'form-control'
+      ) 
+    %>
     </div>
 
-    <div class="form-group  col-md-4" style="display:none;" id="ipm">
-      <%= form.label :ipm_id %>
-      <%= form.collection_select(:ipm_id, Ipm.all, :id, :name,
-          {
-            include_blank: true
-          },
-          class: 'form-control'
-        ) 
-      %>
+    <div id="ipm">
+      <div class="form-group col-md-4">
+        <%= form.label :ipm_id %>
+        <%= form.collection_select(:ipm_id, Ipm.all, :id, :name,
+            {
+              include_blank: true
+            },
+            class: 'form-control'
+          ) 
+        %>
+      </div>
+      <div class="form-group col-md-4">
+        <%= form.label :pourcentage_ipm %>
+        <%= form.number_field :pourcentage_ipm, min: 0, max: 100, class:"form-control" %>
+      </div>
     </div>
 
-    <div class="form-group col-md-4" style="display:none;">
-      <%= form.label :payment %>
-      <%= form.text_field :payment, class:"form-control" %>
-    </div>
 
-    <div class="form-group col-md-4" style="display:none;" id="montant">
+
+    <div class="form-group col-md-4" style="" id="montant">
       <%= form.label :montant %>
-      <%= form.number_field :montant, class:"form-control" %>
+      <%= form.number_field :montant, class:"form-control", min: 0 %>
     </div>
 
     <div class="form-group col-md-4">
