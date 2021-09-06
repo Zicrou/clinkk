@@ -1,6 +1,7 @@
 class Comptabilite < ApplicationRecord
   belongs_to :ipm, optional: true
   belongs_to :type_paiment, optional: true
+  #belongs_to :acte
   validates_presence_of :nom, :prenom, :acte, :montant, :telephone, :type_paiment_id
 
   

@@ -1,0 +1,2 @@
+class Acte < ApplicationRecord
+end

@@ -1,0 +1,11 @@
+<div class="container portfolio-container">
+  <p id="notice" class="alert alert-success"><%= notice %></p>
+
+  <p>
+    <strong>Name:</strong>
+    <%= @acte.name %>
+  </p>
+
+  <%= link_to 'Editer', edit_acte_path(@acte) %> |
+  <%= link_to 'Retour', actes_path %>
+</div>

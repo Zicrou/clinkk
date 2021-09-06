@@ -1,0 +1,29 @@
+<div class="container portfolio-container">
+  <p id="notice"><%= notice %></p>
+
+  <h1>Liste des Actes</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Libellé</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @actes.each do |acte| %>
+        <tr>
+          <td><%= acte.name %></td>
+          <td><%= link_to 'Voir', acte %></td>
+          <td><%= link_to 'Editer', edit_acte_path(acte) %></td>
+          <td><%= link_to 'Supprimer', acte, method: :delete, data: { confirm: 'Êtes-vous sûre?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <%= link_to 'Ajouter', new_acte_path, class:"btn btn-primary" %>
+</div>
