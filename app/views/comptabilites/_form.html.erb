@@ -28,10 +28,23 @@
     </div>
 
     <div class="form-group  col-md-4">
+      <%= form.label :type_paiment_id %>
+      <%= form.collection_select(:type_paiment_id, TypePaiment.all, :id, :name,
+          {
+            #selected: "Choisir un IPM",
+            include_blank: true
+          },
+          class: 'form-control',
+          onchange: 'getIDTypePaiment()',
+          class: 'form-control'
+        ) 
+      %>
+    </div>
+
+    <div class="form-group  col-md-4" style="display:none;" id="ipm">
       <%= form.label :ipm_id %>
       <%= form.collection_select(:ipm_id, Ipm.all, :id, :name,
           {
-            #selected: "Choisir un IPM",
             include_blank: true
           },
           class: 'form-control'
@@ -39,12 +52,12 @@
       %>
     </div>
 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-4" style="display:none;">
       <%= form.label :payment %>
       <%= form.text_field :payment, class:"form-control" %>
     </div>
 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-4" style="display:none;" id="montant">
       <%= form.label :montant %>
       <%= form.number_field :montant, class:"form-control" %>
     </div>

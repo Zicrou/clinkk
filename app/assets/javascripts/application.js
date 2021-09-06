@@ -15,6 +15,7 @@
 //= require rails-ujs
 //= require cocoon
 //= require gritter
+//= require comptabilite
 //= require activestorage
 //= require turbolinks
 //= require_tree .

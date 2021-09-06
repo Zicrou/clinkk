@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_05_042654) do
+ActiveRecord::Schema.define(version: 2021_09_05_043545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,7 +36,9 @@ ActiveRecord::Schema.define(version: 2021_09_05_042654) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "ipm_id"
+    t.bigint "type_paiment_id"
     t.index ["ipm_id"], name: "index_comptabilites_on_ipm_id"
+    t.index ["type_paiment_id"], name: "index_comptabilites_on_type_paiment_id"
   end
 
   create_table "ipms", force: :cascade do |t|
@@ -65,4 +67,5 @@ ActiveRecord::Schema.define(version: 2021_09_05_042654) do
   end
 
   add_foreign_key "comptabilites", "ipms"
+  add_foreign_key "comptabilites", "type_paiments"
 end

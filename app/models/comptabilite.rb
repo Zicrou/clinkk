@@ -1,6 +1,7 @@
 class Comptabilite < ApplicationRecord
   belongs_to :ipm, optional: true
-  validates_presence_of :nom, :prenom, :acte, :payment, :montant, :telephone, :ipm_id
+  belongs_to :typepaiment, optional: true
+  validates_presence_of :nom, :prenom, :acte, :payment, :montant, :telephone, :ipm_id, :type_paiment_id
 
   
   def self.bilan_journalier(select_date)

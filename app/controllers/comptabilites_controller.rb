@@ -35,6 +35,7 @@ class ComptabilitesController < ApplicationController
   # GET /comptabilites/new
   def new
     @comptabilite = Comptabilite.new
+
   end
 
   # GET /comptabilites/1/edit
@@ -86,7 +87,7 @@ class ComptabilitesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comptabilite_params
-      params.require(:comptabilite).permit(:nom, :prenom, :acte, :payment, :montant, :telephone, :selected_date_day, :selected_date_month, :ipm_id)
+      params.require(:comptabilite).permit(:nom, :prenom, :acte, :payment, :montant, :telephone, :selected_date_day, :selected_date_month, :ipm_id, :type_paiment_id)
     end
 
     #def set_recherch_comptabilite_params
