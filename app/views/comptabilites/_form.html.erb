@@ -12,7 +12,10 @@
       </div>
     <% end %>
   <% if @msg_error %>
-    <div class="alert alert-danger"><%= @msg_error %></div>
+    <div class="alert alert-danger">
+    <ul>
+      <li><%= @msg_error %></div></li>
+    </ul>
   <% end %>
     <div class="form-group col-md-4">
       <%= form.label :nom %>
