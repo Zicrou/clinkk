@@ -26,7 +26,13 @@
 
     <div class="form-group col-md-4">
       <%= form.label :acte %>
-      <%= form.text_field :acte, class:"form-control" %>
+      <%= form.collection_select(:acte_id, Acte.all, :id, :name,
+        {
+          include_blank: true
+        },
+        class: 'form-control',
+      ) 
+    %>
     </div>
 
     <div class="form-group  col-md-4">
@@ -36,7 +42,6 @@
           #selected: "Choisir un IPM",
           include_blank: true
         },
-        class: 'form-control',
         onchange: 'getIDTypePaiment()',
         class: 'form-control'
       ) 

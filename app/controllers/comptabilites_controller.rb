@@ -51,6 +51,10 @@ class ComptabilitesController < ApplicationController
         format.html { render :new}
           
           @msg_error = "Impossible d'enregistrer. Le montant ne correspond pas au pourcentage de prise en charge de l'ipm."
+      elsif @comptabilite.type_paiment_id == 1 && !@comptabilite.pourcentage_ipm.nil?
+        format.html { render :new}
+          
+          @msg_error = "Impossible d'enregistrer. Le Type de paiement ne correspond pas au pourcentage de prise en charge de l'ipm."
       else
         if @comptabilite.save
           format.html { redirect_to @comptabilite, notice: "Enregistrer avec succés." }
@@ -65,10 +69,25 @@ class ComptabilitesController < ApplicationController
 
   # PATCH/PUT /comptabilites/1 or /comptabilites/1.json
   def update
+    type_paiment = params[:comptabilite][:type_paiment_id]
+    pourcentage_ipm = params[:comptabilite][:pourcentage_ipm]
+    ipm_id = params[:comptabilite][:ipm_id]
+    montant = params[:comptabilite][:montant]
+
     respond_to do |format|
-      if @comptabilite.pourcentage_ipm == 100 && @comptabilite.montant != 0
+      if pourcentage_ipm == "100" && montant != "0"
         format.html { render :edit}         
-          @msg_error = "Impossible d'enregistrer. Le montant ne correspond pas au pourcentage de prise en charge de l'ipm."
+        @msg_error = "Impossible d'enregistrer. Le montant ne correspond pas au pourcentage de prise en charge de l'ipm."  
+      elsif (type_paiment == "1" && (pourcentage_ipm !="" || ipm_id !=""))
+        format.html { render :edit }
+        @msg_error = "Impossible d'enregistrer. Le Type de paiement ne doit pas avoir ni un ipm ni un pourcentage de prise en charge."
+        params[:comptabilite][:pourcentage_ipm] = ""
+        params[:comptabilite][:montant] = ""
+        #pry
+      elsif (type_paiment == "2" && (pourcentage_ipm =="" || ipm_id ==""))
+        format.html { render :edit }
+        puts @msg_error = "Impossible d'enregistrer. Le Type de paiement slectionner doit avoir un ipm et un pourcentage."
+        #pry
       else
         if @comptabilite.update(comptabilite_params)
           format.html { redirect_to @comptabilite, notice: "Modifier avec succés." }
@@ -98,7 +117,7 @@ class ComptabilitesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comptabilite_params
-      params.require(:comptabilite).permit(:nom, :prenom, :acte, :montant, :telephone, :selected_date_day, :selected_date_month, :ipm_id, :type_paiment_id, :pourcentage_ipm)
+      params.require(:comptabilite).permit(:nom, :prenom, :acte_id, :montant, :telephone, :selected_date_day, :selected_date_month, :ipm_id, :type_paiment_id, :pourcentage_ipm)
     end
 
     #def set_recherch_comptabilite_params

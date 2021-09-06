@@ -1,5 +1,7 @@
 <div class="container portfolio-container">
-  <p id="notice" class="alert alert-success"><%= notice %></p>
+  <% if notice %>
+    <p id="notice" class="alert alert-success"><%= notice %></p>
+  <% end %>
 
   <p>
     <strong>Nom:</strong>
@@ -13,7 +15,7 @@
 
   <p>
     <strong>Acte:</strong>
-    <%= @comptabilite.acte %>
+    <%= @comptabilite.acte.name %>
   </p>
 
   <p>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_06_044742) do
+ActiveRecord::Schema.define(version: 2021_09_06_050417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 2021_09_06_044742) do
     t.bigint "ipm_id"
     t.bigint "type_paiment_id"
     t.integer "pourcentage_ipm"
+    t.bigint "acte_id"
+    t.index ["acte_id"], name: "index_comptabilites_on_acte_id"
     t.index ["ipm_id"], name: "index_comptabilites_on_ipm_id"
     t.index ["type_paiment_id"], name: "index_comptabilites_on_type_paiment_id"
   end
@@ -73,6 +75,7 @@ ActiveRecord::Schema.define(version: 2021_09_06_044742) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "comptabilites", "actes"
   add_foreign_key "comptabilites", "ipms"
   add_foreign_key "comptabilites", "type_paiments"
 end
