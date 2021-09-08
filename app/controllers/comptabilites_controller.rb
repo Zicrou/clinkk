@@ -48,9 +48,9 @@ class ComptabilitesController < ApplicationController
 
     respond_to do |format|
       if @comptabilite.type_paiment_id == 1
-        if (@comptabilite.pourcentage_ipm!= "" || @comptabilite.ipm_id != "" || @comptabilite.montant != "" || @comptabilite.montant < 0)
+        if (@comptabilite.pourcentage_ipm!= "" || @comptabilite.ipm_id != "" || @comptabilite.montant_total != "" || @comptabilite.montant < 0)
           format.html { render :new}         
-          @msg_error = "ECHEC D'ENREGISTREMENT. Vous avez choisi CASH comme type de paiement donc laisser à vide les listes IPM AINSI QUE POURCENTAGE IPM. LE MONTANT DOIT ÊTRE REMPLI."
+          @msg_error = "ECHEC D'ENREGISTREMENT. VOUS AVEZ CHOISI CASH COMME TYPE DE PAIMENT DONC VIDER LE LISTE IPM AINSI QUE LE POURCENTAGE DE L'IPM."
         else
           if @comptabilite.save
             format.html { redirect_to @comptabilite, notice: "Enregistrer avec succés." }
@@ -61,9 +61,9 @@ class ComptabilitesController < ApplicationController
           end
         end 
       elsif @comptabilite.type_paiment_id == 2
-        if (@comptabilite.pourcentage_ipm == "" || @comptabilite.ipm_id == "" || @comptabilite.montant == "" || @comptabilite.montant == 0 ||@comptabilite.pourcentage_ipm == 0)
+        if (@comptabilite.pourcentage_ipm == "" || @comptabilite.pourcentage_ipm < 0 || @comptabilite.ipm_id == "" || @comptabilite.montant == "" || @comptabilite.montant < 0 || @comptabilite.montant_total <= 0 || @comptabilite.montant_total == "" )
           format.html { render :new}         
-          @msg_error = "ECHEC D'ENREGISTREMENT. Vous avez choisi IPM comme type de paiement donc veuillez selectionner dans la liste des IPM et saisir le POURCENTAGE DE PRISE EN CHARGE.LE MONTANT DOIT ÊTRE SUPÉRIEUR À 0"
+          @msg_error = "ECHEC D'ENREGISTREMENT. VOUS AVEZ CHOISI IPM COMME TYPE DE PAIMENT DONC VEUILLEZ SELECTIONNER DANS LA LISTE DES IPM ET SAISIR LE POURCENTAGE DE PRISE EN CHARGE.LE MONTANT DOIT PAS ÊTRE INFÉRIEUR À 0"
         elsif (@comptabilite.pourcentage_ipm == 100 && @comptabilite.montant != 0)
           format.html { render :new}         
           @msg_error = "ECHEC D'ENREGISTREMENT.  LE POURCENTAGE DE PRISE EN CHARGE ET LE MONTANT SAISI NE CORRESPONDENT PAS."
@@ -100,11 +100,14 @@ class ComptabilitesController < ApplicationController
     montant = params[:comptabilite][:montant]
     param_montant = params[:comptabilite][:montant].to_i
 
+    montant_total = params[:comptabilite][:montant_total]
+    param_montant_total = params[:comptabilite][:montant_total].to_i
+
     respond_to do |format|
       if type_paiment == "1"
-        if (pourcentage_ipm!= "" || ipm_id != "" || montant != "" || param_montant <= 0)
+        if (pourcentage_ipm != "" || ipm_id != "" || montant_total != "" || param_montant <= 0)
           format.html { render :edit}         
-          @msg_error = "ECHEC D'ENREGISTREMENT. Vous avez choisi CASH comme type de paiement donc laisser à vide les listes IPM AINSI QUE POURCENTAGE IPM. LE MONTANT doit être rempli." 
+          @msg_error = "ECHEC D'ENREGISTREMENT. VOUS AVEZ CHOISI CASH COMME TYPE DE PAIMENT DONC VIDER LE LISTE IPM AINSI QUE LE POURCENTAGE DE L'IPM." 
         else
           if @comptabilite.update(comptabilite_params)
             format.html { redirect_to @comptabilite, notice: "Modifier avec succés." }
@@ -115,9 +118,9 @@ class ComptabilitesController < ApplicationController
           end
         end
       elsif type_paiment == "2"
-        if (pourcentage_ipm == "" || ipm_id == "" || montant == "" || param_montant < 0)
+        if (pourcentage_ipm == "" || ipm_id == "" || montant == "" || param_montant < 0 || montant_total == "" || param_montant_total <= 0)
           format.html { render :edit}         
-          @msg_error = "ECHEC D'ENREGISTREMENT. Vous avez choisi IPM comme type de paiement donc veuillez selectionner dans la liste des IPM et saisir le POURCENTAGE DE PRISE EN CHARGE.LE MONTANT DOIT ÊTRE SUPÉRIEUR À 0"
+          @msg_error = "ECHEC D'ENREGISTREMENT. VOUS AVEZ CHOISI IPM COMME TYPE DE PAIMENT DONC VEUILLEZ SELECTIONNER DANS LA LISTE DES IPM ET SAISIR LE POURCENTAGE DE PRISE EN CHARGE.LE MONTANT DOIT PAS ÊTRE INFÉRIEUR À 0"
         elsif (param_pourcentage_ipm < 100 && (param_montant <= 0 || montant == ""))
           format.html { render :edit}         
           @msg_error = "ECHEC D'ENREGISTREMENT.  LE POURCENTAGE DE PRISE EN CHARGE NE CORRESPOND PAS AVEC LE MONTANT SAISI."
@@ -154,7 +157,7 @@ class ComptabilitesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comptabilite_params
-      params.require(:comptabilite).permit(:nom, :prenom, :acte_id, :montant, :telephone, :selected_date_day, :selected_date_month, :ipm_id, :type_paiment_id, :pourcentage_ipm)
+      params.require(:comptabilite).permit(:nom, :prenom, :acte_id, :montant, :montant_total, :telephone, :selected_date_day, :selected_date_month, :ipm_id, :type_paiment_id, :pourcentage_ipm)
     end
 
     #def set_recherch_comptabilite_params

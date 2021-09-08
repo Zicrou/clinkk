@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Mois:</strong>
+  <%= @reglement.mois %>
+</p>
+
+<p>
+  <strong>Montant:</strong>
+  <%= @reglement.montant %>
+</p>
+
+<p>
+  <strong>Ipm:</strong>
+  <%= @reglement.ipm %>
+</p>
+
+<%= link_to 'Edit', edit_reglement_path(@reglement) %> |
+<%= link_to 'Back', reglements_path %>

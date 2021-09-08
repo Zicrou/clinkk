@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :reglements
   resources :actes
   resources :type_paiments
   resources :ipms

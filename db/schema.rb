@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_06_050417) do
+ActiveRecord::Schema.define(version: 2021_09_08_215203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2021_09_06_050417) do
     t.bigint "type_paiment_id"
     t.integer "pourcentage_ipm"
     t.bigint "acte_id"
+    t.integer "montant_total"
     t.index ["acte_id"], name: "index_comptabilites_on_acte_id"
     t.index ["ipm_id"], name: "index_comptabilites_on_ipm_id"
     t.index ["type_paiment_id"], name: "index_comptabilites_on_type_paiment_id"
@@ -54,6 +55,15 @@ ActiveRecord::Schema.define(version: 2021_09_06_050417) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "reglements", force: :cascade do |t|
+    t.date "mois"
+    t.integer "montant"
+    t.bigint "ipm_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ipm_id"], name: "index_reglements_on_ipm_id"
   end
 
   create_table "type_paiments", force: :cascade do |t|
@@ -78,4 +88,5 @@ ActiveRecord::Schema.define(version: 2021_09_06_050417) do
   add_foreign_key "comptabilites", "actes"
   add_foreign_key "comptabilites", "ipms"
   add_foreign_key "comptabilites", "type_paiments"
+  add_foreign_key "reglements", "ipms"
 end

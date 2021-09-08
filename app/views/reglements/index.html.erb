@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Reglements</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mois</th>
+      <th>Montant</th>
+      <th>Ipm</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reglements.each do |reglement| %>
+      <tr>
+        <td><%= reglement.mois %></td>
+        <td><%= reglement.montant %></td>
+        <td><%= reglement.ipm %></td>
+        <td><%= link_to 'Show', reglement %></td>
+        <td><%= link_to 'Edit', edit_reglement_path(reglement) %></td>
+        <td><%= link_to 'Destroy', reglement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Reglement', new_reglement_path %>
