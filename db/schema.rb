@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_08_215203) do
+ActiveRecord::Schema.define(version: 2021_09_09_010250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,8 +46,11 @@ ActiveRecord::Schema.define(version: 2021_09_08_215203) do
     t.integer "pourcentage_ipm"
     t.bigint "acte_id"
     t.integer "montant_total"
+    t.integer "reglemented"
+    t.bigint "reglement_id"
     t.index ["acte_id"], name: "index_comptabilites_on_acte_id"
     t.index ["ipm_id"], name: "index_comptabilites_on_ipm_id"
+    t.index ["reglement_id"], name: "index_comptabilites_on_reglement_id"
     t.index ["type_paiment_id"], name: "index_comptabilites_on_type_paiment_id"
   end
 
@@ -87,6 +90,7 @@ ActiveRecord::Schema.define(version: 2021_09_08_215203) do
 
   add_foreign_key "comptabilites", "actes"
   add_foreign_key "comptabilites", "ipms"
+  add_foreign_key "comptabilites", "reglements"
   add_foreign_key "comptabilites", "type_paiments"
   add_foreign_key "reglements", "ipms"
 end

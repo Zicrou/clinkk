@@ -1,32 +1,40 @@
-<%= form_with(model: reglement, local: true) do |form| %>
-  <% if reglement.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(reglement.errors.count, "error") %> prohibited this reglement from being saved:</h2>
+<div class="container portfolio-container">
+  <%= form_with(model: reglement, local: true) do |form| %>
+    <% if reglement.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(reglement.errors.count, "error") %> prohibited this reglement from being saved:</h2>
 
-      <ul>
-      <% reglement.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% reglement.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group col-md-3">
+      <%= form.label :date %>
+      <%= form.date_select :mois, {discard_day: true, with_css_classes: true, class: "form-control"} %>
+    </div>
+
+    <div class="form-group col-md-3">
+      <%= form.label :montant %>
+      <%= form.number_field :montant, min: 0, class:"form-control" %>
+    </div>
+
+    <div class="form-group col-md-3">
+      <%= form.label :ipm_id %>
+      <%= form.collection_select(:ipm_id, Ipm.all, :id, :name,
+          {
+            include_blank: true
+          },
+          class: 'form-control'
+        ) 
+      %>
+    </div>
+<br>
+    <div class="form-group col-md-3">
+      <%= form.submit "Valider", class:"btn btn-primary" %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :mois %>
-    <%= form.date_select :mois %>
-  </div>
-
-  <div class="field">
-    <%= form.label :montant %>
-    <%= form.number_field :montant %>
-  </div>
-
-  <div class="field">
-    <%= form.label :ipm_id %>
-    <%= form.text_field :ipm_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

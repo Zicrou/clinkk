@@ -7,7 +7,6 @@
     <div class="col-md-4">
       <%= form_tag(comptabilites_path, method: :get) do %>
         <div class="form-group">
-          <%#= label :Selectionner_une_date %>
           <%= date_field_tag(:selected_date_day, params[:selected_date_day], class:"form-control") %>
           <hr class="">
         <%= submit_tag ("Bilan du jour"),  class:"form-control btn-primary" %>
@@ -20,7 +19,6 @@
     <div class="col-md-4">
       <%= form_tag(comptabilites_path, method: :get) do %>
         <div class="form-group">
-          <%#= label :Selectionner_une_date %>
           <%= date_field_tag(:selected_date_month, params[:selected_date_month], class:"form-control") %>
         </div>
         <hr class="">
@@ -31,8 +29,7 @@
     </div>
   </div>
   <% if @date_month && @date_month != "" %>
-    <%#= @date_month_info %>
-    <span class="alert alert-primary d-flex align-items-center" role="alert">Le bilan du <%= @date_month_info.strftime("%Y/%m") if !@date_month.empty? %> est de :<%= @bilan_mensuel.sum("montant") if @bilan_mensuel %>F</span>
+    <span class="alert alert-primary d-flex align-items-center" role="alert">Le bilan du <%= @date_month_info.strftime("%Y/%m") if !@date_month.empty? %> est de :<%= @bilan_mensuel if @bilan_mensuel %>F</span>
   <% end %>
 
   <% if @date_day && @date_day != "" %>

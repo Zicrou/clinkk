@@ -1,19 +1,21 @@
-<p id="notice"><%= notice %></p>
+<div class="container portfolio-container">
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Mois:</strong>
-  <%= @reglement.mois %>
-</p>
+  <p>
+    <strong>Mois:</strong>
+    <%= @reglement.mois %>
+  </p>
 
-<p>
-  <strong>Montant:</strong>
-  <%= @reglement.montant %>
-</p>
+  <p>
+    <strong>Montant:</strong>
+    <%= @reglement.montant %>
+  </p>
 
-<p>
-  <strong>Ipm:</strong>
-  <%= @reglement.ipm %>
-</p>
+  <p>
+    <strong>Ipm:</strong>
+    <%= @reglement.ipm.name %>
+  </p>
 
-<%= link_to 'Edit', edit_reglement_path(@reglement) %> |
-<%= link_to 'Back', reglements_path %>
+  <%= link_to 'Editer', edit_reglement_path(@reglement) %> |
+  <%= link_to 'Retour', reglements_path %>
+</div>

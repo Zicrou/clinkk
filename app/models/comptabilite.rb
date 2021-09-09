@@ -2,6 +2,9 @@ class Comptabilite < ApplicationRecord
   belongs_to :ipm, optional: true
   belongs_to :type_paiment, optional: true
   belongs_to :acte
+
+  has_many :reglement_mensuel
+
   validates_presence_of :nom, :prenom, :acte_id, :montant, :telephone, :type_paiment_id
 
   
@@ -13,7 +16,7 @@ class Comptabilite < ApplicationRecord
   
   def self.bilan_mensuel(select_date)
     @selected_date = select_date
-    @caiss_journaliers = Comptabilite.where(:created_at => @selected_date.beginning_of_month..@selected_date.end_of_month)
+    @caiss_mensuel = Comptabilite.where(:created_at => @selected_date.beginning_of_month..@selected_date.end_of_month)
   end
 
 

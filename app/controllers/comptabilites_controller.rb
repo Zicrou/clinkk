@@ -10,20 +10,29 @@ class ComptabilitesController < ApplicationController
       @date_day = params[:selected_date_day]
       @date_month = params[:selected_date_month]
       @comptabilites = Comptabilite.all.recent
-      
+
       @caiss_journalier = Comptabilite.bilan_journalier(Date.today)
       
       if @date_month && !@date_month.empty?
         @date_convert = @date_month.to_date
-        @bilan_mensuel = Comptabilite.bilan_mensuel(@date_convert)
+
+        @c_mensuel = Comptabilite.bilan_mensuel(@date_convert)
+        @comptabilite_mensuel = @c_mensuel.sum("montant")
+        
+        @reglmnt_mensuel = Reglement.bilan_mensuel(@date_convert)
+        @reglement_mensuel = @reglmnt_mensuel.sum("montant")
+
+        @bilan_mensuel = @comptabilite_mensuel + @reglement_mensuel
+        
         @date_month_info = @date_month.to_datetime
-        #@date_month_info.strftime("%Y %m")
       end
 
       if @date_day && !@date_day.empty?
         @date_convert = @date_day.to_date
         @recherche_caiss_journalier = Comptabilite.recherche_caiss_journalier(@date_convert)
       end
+      @c_total = Comptabilite.all.sum("montant")
+      #pry
     end
     
   end
@@ -46,40 +55,49 @@ class ComptabilitesController < ApplicationController
   def create
     @comptabilite = Comptabilite.new(comptabilite_params)
 
-    respond_to do |format|
-      if @comptabilite.type_paiment_id == 1
-        if (@comptabilite.pourcentage_ipm!= "" || @comptabilite.ipm_id != "" || @comptabilite.montant_total != "" || @comptabilite.montant < 0)
-          format.html { render :new}         
-          @msg_error = "ECHEC D'ENREGISTREMENT. VOUS AVEZ CHOISI CASH COMME TYPE DE PAIMENT DONC VIDER LE LISTE IPM AINSI QUE LE POURCENTAGE DE L'IPM."
-        else
-          if @comptabilite.save
-            format.html { redirect_to @comptabilite, notice: "Enregistrer avec succés." }
-            format.json { render :show, status: :created, location: @comptabilite }
-          else
+    if (@comptabilite.type_paiment_id == "" || @comptabilite.pourcentage_ipm == "" || @comptabilite.ipm_id == "" || @comptabilite.montant == "" || @comptabilite.montant_total == "" || @comptabilite.nom == "" || @comptabilite.prenom == "" || @comptabilite.acte_id == "")
+      if !@comptabilite.save
+          respond_to do |format|
             format.html { render :new, status: :unprocessable_entity }
             format.json { render json: @comptabilite.errors, status: :unprocessable_entity }
-          end
-        end 
-      elsif @comptabilite.type_paiment_id == 2
-        if (@comptabilite.pourcentage_ipm == "" || @comptabilite.pourcentage_ipm < 0 || @comptabilite.ipm_id == "" || @comptabilite.montant == "" || @comptabilite.montant < 0 || @comptabilite.montant_total <= 0 || @comptabilite.montant_total == "" )
-          format.html { render :new}         
-          @msg_error = "ECHEC D'ENREGISTREMENT. VOUS AVEZ CHOISI IPM COMME TYPE DE PAIMENT DONC VEUILLEZ SELECTIONNER DANS LA LISTE DES IPM ET SAISIR LE POURCENTAGE DE PRISE EN CHARGE.LE MONTANT DOIT PAS ÊTRE INFÉRIEUR À 0"
-        elsif (@comptabilite.pourcentage_ipm == 100 && @comptabilite.montant != 0)
-          format.html { render :new}         
-          @msg_error = "ECHEC D'ENREGISTREMENT.  LE POURCENTAGE DE PRISE EN CHARGE ET LE MONTANT SAISI NE CORRESPONDENT PAS."
-        elsif (@comptabilite.pourcentage_ipm < 100 && @comptabilite.montant <= 0)
-          format.html { render :new}         
-          @msg_error = "ECHEC D'ENREGISTREMENT.  LE POURCENTAGE DE PRISE EN CHARGE ET LE MONTANT SAISI NE CORRESPONDENT PAS."
-        elsif (@comptabilite.pourcentage_ipm == 0 && @comptabilite.montant == 0)
-          format.html { render :new}         
-          @msg_error = "ECHEC D'ENREGISTREMENT.  LE POURCENTAGE DE PRISE EN CHARGE ET LE MONTANT SAISI NE CORRESPONDENT PAS."
-        else
-          if @comptabilite.save
-            format.html { redirect_to @comptabilite, notice: "Enregistrer avec succés." }
-            format.json { render :show, status: :created, location: @comptabilite }
+        end
+      end
+    else
+      respond_to do |format|
+        if @comptabilite.type_paiment_id == 1
+          if (@comptabilite.pourcentage_ipm!= "" || @comptabilite.ipm_id != "" || @comptabilite.montant_total != "" || @comptabilite.montant < 0)
+            format.html { render :new}         
+            @msg_error = "ECHEC D'ENREGISTREMENT. VOUS AVEZ CHOISI CASH COMME TYPE DE PAIMENT DONC VIDER LE LISTE IPM AINSI QUE LE POURCENTAGE DE L'IPM."
           else
-            format.html { render :new, status: :unprocessable_entity }
-            format.json { render json: @comptabilite.errors, status: :unprocessable_entity }
+            if @comptabilite.save
+              format.html { redirect_to @comptabilite, notice: "Enregistrer avec succés." }
+              format.json { render :show, status: :created, location: @comptabilite }
+            else
+              format.html { render :new, status: :unprocessable_entity }
+              format.json { render json: @comptabilite.errors, status: :unprocessable_entity }
+            end
+          end 
+        elsif @comptabilite.type_paiment_id == 2
+          if (@comptabilite.pourcentage_ipm == "" || @comptabilite.pourcentage_ipm < 0 || @comptabilite.ipm_id == "" || @comptabilite.montant == "" || @comptabilite.montant < 0 || @comptabilite.montant_total <= 0 || @comptabilite.montant_total == "" )
+            format.html { render :new}         
+            @msg_error = "ECHEC D'ENREGISTREMENT. VOUS AVEZ CHOISI IPM COMME TYPE DE PAIMENT DONC VEUILLEZ SELECTIONNER DANS LA LISTE DES IPM ET SAISIR LE POURCENTAGE DE PRISE EN CHARGE.LE MONTANT DOIT PAS ÊTRE INFÉRIEUR À 0"
+          elsif (@comptabilite.pourcentage_ipm == 100 && @comptabilite.montant != 0)
+            format.html { render :new}         
+            @msg_error = "ECHEC D'ENREGISTREMENT.  LE POURCENTAGE DE PRISE EN CHARGE ET LE MONTANT SAISI NE CORRESPONDENT PAS."
+          elsif (@comptabilite.pourcentage_ipm < 100 && @comptabilite.montant <= 0)
+            format.html { render :new}         
+            @msg_error = "ECHEC D'ENREGISTREMENT.  LE POURCENTAGE DE PRISE EN CHARGE ET LE MONTANT SAISI NE CORRESPONDENT PAS."
+          elsif (@comptabilite.pourcentage_ipm == 0 && @comptabilite.montant == 0)
+            format.html { render :new}         
+            @msg_error = "ECHEC D'ENREGISTREMENT.  LE POURCENTAGE DE PRISE EN CHARGE ET LE MONTANT SAISI NE CORRESPONDENT PAS."
+          else
+            if @comptabilite.save
+              format.html { redirect_to @comptabilite, notice: "Enregistrer avec succés." }
+              format.json { render :show, status: :created, location: @comptabilite }
+            else
+              format.html { render :new, status: :unprocessable_entity }
+              format.json { render json: @comptabilite.errors, status: :unprocessable_entity }
+            end
           end
         end
       end

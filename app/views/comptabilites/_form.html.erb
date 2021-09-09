@@ -65,13 +65,7 @@
 
       <div class="form-group col-md-4">
         <%= form.label :montant_total %>
-        <%= form.collection_select(:montant_total, Ipm.all, :id, :name,
-            {
-              include_blank: true
-            },
-            class: 'form-control'
-          ) 
-        %>
+        <%= form.number_field :montant_total, min: 0, class:"form-control" %>
       </div>
       
       <div class="form-group col-md-4">

@@ -29,6 +29,8 @@
             <li><%=link_to "Se Connecter",new_user_session_path(), class:"dropdown-item text-white" %>
           <% else %>
           <li><%=link_to "Comptabilité", comptabilites_path(), class:"dropdown-item text-white nav-link span" %></li>
+
+          <li><%=link_to "Réglement", reglements_path(), class:"dropdown-item text-white nav-link span" %></li>
          
           <li><hr class="dropdown-divider"></li>
             <li><%=link_to "Déconnection",destroy_user_session_path,method: :delete, class:"nav-link span dropdown-item text-white" %>
