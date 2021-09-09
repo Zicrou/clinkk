@@ -32,13 +32,26 @@ class ComptabilitesController < ApplicationController
         @recherche_caiss_journalier = Comptabilite.recherche_caiss_journalier(@date_convert)
       end
       @c_total = Comptabilite.all.sum("montant")
-      #pry
+    
     end
     
   end
 
   # GET /comptabilites/1 or /comptabilites/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+          render pdf: "Ticket No. #{@comptabilite.id}",
+          page_size: 'A7',
+          template: "comptabilites/show.html.erb",
+          layout: "pdf.html",
+          orientation: "Landscape",
+          lowquality: true,
+          zoom: 1,
+          dpi: 75
+      end
+    end
   end
 
   # GET /comptabilites/new

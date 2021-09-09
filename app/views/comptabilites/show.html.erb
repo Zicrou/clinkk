@@ -2,53 +2,41 @@
   <% if notice %>
     <p id="notice" class="alert alert-success"><%= notice %></p>
   <% end %>
-
+<%= link_to "Print Ticket", comptabilite_path(@comptabilite, format: :pdf, target: "_blank") %>
+  <span>Ticket No. <%= @comptabilite.id%><span>
   <p>
     <strong>Nom:</strong>
-    <%= @comptabilite.nom %>
-  </p>
-
-  <p>
-    <strong>Prenom:</strong>
+    <%= @comptabilite.nom %> <strong>Prenom:</strong>
     <%= @comptabilite.prenom %>
   </p>
 
+  
   <p>
     <strong>Acte:</strong>
-    <%= @comptabilite.acte.name %>
+    <%= @comptabilite.acte.name %> <strong>Type de Paiement:</strong>
+    <%= @comptabilite.type_paiment.name %>
   </p>
 
   <p>
-    <strong>Type de Paiement:</strong>
-    <%= @comptabilite.type_paiment.name %>
+    
   </p>
 
   <% if !@comptabilite.ipm.nil?%>
     <p>
       <strong>Nom IPM:</strong>
-      <%= @comptabilite.ipm.name %>
-    </p>
-
-    <p>
-      <strong>Le montant total:</strong>
-      <%= @comptabilite.montant_total %>
-    </p>
-
-    <p>
-      <strong>Pourcentage de prise en charge:</strong>
+      <%= @comptabilite.ipm.name %>; <strong>Le montant total:</strong>
+      <%= @comptabilite.montant_total %>; <strong>Pourcentage de prise en charge:</strong>
       <%= @comptabilite.pourcentage_ipm %>%
     </p>
   <% end %>
   <p>
     <strong>Montant:</strong>
-    <%= @comptabilite.montant %>
-  </p>
-
-  <p>
-    <strong>Telephone:</strong>
+    <%= @comptabilite.montant %> <strong>Telephone:</strong>
     <%= @comptabilite.telephone %>
   </p>
 
-  <%= link_to 'Modifer', edit_comptabilite_path(@comptabilite) %> |
-  <%= link_to 'Retour', comptabilites_path %>
+  
+
+  <%= link_to 'Modifer', edit_comptabilite_path(@comptabilite) if logged_in?(:admin)%> 
+  <%= link_to 'Retour', comptabilites_path if logged_in?(:admin) %>
 </div>
