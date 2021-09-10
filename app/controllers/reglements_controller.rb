@@ -25,8 +25,6 @@ class ReglementsController < ApplicationController
     @reglement = Reglement.new(reglement_params)
 
     if @reglement.save
-      #@r = Comptabilite.where(ipm_id: Reglement.ipm_id)
-      #pry
       redirect_to @reglement, notice: 'Reglement was successfully created.'
     else
       render :new

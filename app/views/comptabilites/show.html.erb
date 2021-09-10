@@ -3,40 +3,52 @@
     <p id="notice" class="alert alert-success"><%= notice %></p>
   <% end %>
 <%= link_to "Print Ticket", comptabilite_path(@comptabilite, format: :pdf, target: "_blank") %>
-  <span>Ticket No. <%= @comptabilite.id%><span>
   <p>
-    <strong>Nom:</strong>
-    <%= @comptabilite.nom %> <strong>Prenom:</strong>
-    <%= @comptabilite.prenom %>
-  </p>
-
-  
-  <p>
-    <strong>Acte:</strong>
-    <%= @comptabilite.acte.name %> <strong>Type de Paiement:</strong>
-    <%= @comptabilite.type_paiment.name %>
+    <strong><h1>Nom:</h1></strong>
+    <span style=""><h4><%= @comptabilite.nom %></h4></span>
   </p>
 
   <p>
-    
+    <strong><h1>Prenom:</h1></strong>
+    <span style=""><h4><%= @comptabilite.prenom %></h4></span>
+  </p>
+
+  <p>
+    <strong><h1>Acte:</h1></strong>
+    <span style=""><h4><%= @comptabilite.acte.name %></h4></span>
+  </p>
+
+  <p>
+    <strong><h1>Type de Paiement:</h1></strong>
+    <span style=""><h4><%= @comptabilite.type_paiment.name %></h4></span>
   </p>
 
   <% if !@comptabilite.ipm.nil?%>
     <p>
-      <strong>Nom IPM:</strong>
-      <%= @comptabilite.ipm.name %>; <strong>Le montant total:</strong>
-      <%= @comptabilite.montant_total %>; <strong>Pourcentage de prise en charge:</strong>
-      <%= @comptabilite.pourcentage_ipm %>%
+      <strong><h1>Nom IPM:</strong>
+      <span style=""><h4><%= @comptabilite.ipm.name %></h4></span>
+    </p>
+
+    <p>
+      <strong><h1>Le montant total:</strong>
+      <span style=""><h4><%= @comptabilite.montant_total %></h4></span>
+    </p>
+
+    <p>
+      <strong><h1>Pourcentage de prise en charge:</strong>
+      <span style=""><h4><%= @comptabilite.pourcentage_ipm %>%</h4></span>
     </p>
   <% end %>
   <p>
-    <strong>Montant:</strong>
-    <%= @comptabilite.montant %> <strong>Telephone:</strong>
-    <%= @comptabilite.telephone %>
+    <strong><h1>Montant:</strong>
+    <span style=""><h4><%= @comptabilite.montant %></h4></span>
   </p>
 
-  
+  <p>
+    <strong><h1>Telephone:</h1></strong>
+    <span style=""><h4><%= @comptabilite.telephone %></h4></span>
+  </p>
 
-  <%= link_to 'Modifer', edit_comptabilite_path(@comptabilite) if logged_in?(:admin)%> 
-  <%= link_to 'Retour', comptabilites_path if logged_in?(:admin) %>
+  <%= link_to 'Modifer', edit_comptabilite_path(@comptabilite) %> |
+  <%= link_to 'Retour', comptabilites_path %>
 </div>

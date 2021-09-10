@@ -6,6 +6,6 @@ class Reglement < ApplicationRecord
 
   def self.bilan_mensuel(select_date)
     @selected_date = select_date
-    @caiss_mensuel = Reglement.where(:created_at => @selected_date.beginning_of_month..@selected_date.end_of_month)
+    @caiss_mensuel = Reglement.where(:mois => @selected_date.beginning_of_month..@selected_date.end_of_month)
   end
 end

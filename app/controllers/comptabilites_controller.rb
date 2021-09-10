@@ -1,7 +1,7 @@
 class ComptabilitesController < ApplicationController
   before_action :set_comptabilite, only: %i[ show edit update destroy ]
 
-  access user: {except: [:index, :edit, :show, :update, :create, :new, :destroy]}, editor:[:new, :create, :update, :edit, :show, {except: [:index, :destroy]}], directeur:[:new, :create, :update, :edit, :show, {except: [:index, :destroy]}], admin: :all
+  access user: {except: [:index, :edit, :show, :update, :create, :new, :destroy]}, editor:[:new, :create, :update, :edit, :show, {except: [:index, :destroy]}], admin: :all, directeur: :all
   # GET /comptabilites or /comptabilites.json
   def index
     if !logged_in?(:admin, :directeur)
